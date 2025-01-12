@@ -1,9 +1,10 @@
 part of '../flutter_quran_screen.dart';
 
 class SurahHeaderWidget extends StatelessWidget {
-  const SurahHeaderWidget(this.surahName, {super.key});
+  const SurahHeaderWidget(this.surahName, {super.key, required this.isDarkTheme});
 
   final String surahName;
+  final bool isDarkTheme;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,11 @@ class SurahHeaderWidget extends StatelessWidget {
         'سورة $surahName',
         style: FlutterQuran()
             .hafsStyle
-            .copyWith(fontWeight: FontWeight.w600, fontSize: 18),
+            .copyWith(
+          fontWeight: FontWeight.w600,
+          fontSize: 18,
+          color: isDarkTheme ? Colors.white : Colors.black, // Set text color based on theme
+        ),
       ),
     );
   }

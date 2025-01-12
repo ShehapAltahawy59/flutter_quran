@@ -15,6 +15,7 @@ dependencies:
   # state management
   bloc: ^8.1.4
   flutter_bloc: ^8.1.6
+  url_launcher: ^6.3.1
 
 
   # local storage
