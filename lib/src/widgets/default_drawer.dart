@@ -8,7 +8,8 @@ class _DefaultDrawer extends StatelessWidget {
   // Function to launch the Surah audio URL
   void _playSurahAudio(int surahIndex) async {
     final surahAudioUrl =
-        'https://alquran.cloud/cdn/$surahIndex'; // Replace with the correct URL format
+    //https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/1.mp3
+        'https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/$surahIndex.mp3'; // Replace with the correct URL format
     final uri =
         Uri.parse(surahAudioUrl); // Convert the URL string to a Uri object
 
