@@ -10,6 +10,7 @@ import 'controllers/bookmarks_controller.dart';
 import 'controllers/quran_controller.dart';
 import 'models/quran_constants.dart';
 import 'models/quran_page.dart';
+import 'package:audioplayers/audioplayers.dart';
 part 'utils/images.dart';
 part 'utils/toast_utils.dart';
 part 'widgets/bsmallah_widget.dart';

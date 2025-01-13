@@ -8,7 +8,6 @@ class _DefaultDrawer extends StatelessWidget {
   // Function to launch the Surah audio URL
   void _playSurahAudio(int surahIndex) async {
     final surahAudioUrl =
-    //https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/1.mp3
         'https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/$surahIndex.mp3'; // Replace with the correct URL format
     final uri =
         Uri.parse(surahAudioUrl); // Convert the URL string to a Uri object
@@ -170,5 +169,48 @@ class _DefaultDrawer extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class AudioManager {
+  static final AudioManager _instance = AudioManager._internal();
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  bool _isPlaying = false;
+  String? _currentSurah;
+
+  factory AudioManager() {
+    return _instance;
+  }
+
+  AudioManager._internal();
+
+  Future<void> playSurahAudio(int surahIndex) async {
+    final surahAudioUrl =
+        'https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/$surahIndex.mp3';
+
+    try {
+      if (_isPlaying && _currentSurah == 'Surah $surahIndex') {
+        // If the same Surah is already playing, pause it
+        await _audioPlayer.pause();
+        _isPlaying = false;
+      } else {
+        // Play the new Surah
+        await _audioPlayer.play(UrlSource(surahAudioUrl));
+        _isPlaying = true;
+        _currentSurah = 'Surah $surahIndex';
+      }
+    } catch (e) {
+      print('Error playing audio: $e');
+    }
+  }
+
+  Future<void> stopAudio() async {
+    await _audioPlayer.stop();
+    _isPlaying = false;
+    _currentSurah = null;
+  }
+
+  bool isPlaying(String surah) {
+    return _isPlaying && _currentSurah == surah;
   }
 }
