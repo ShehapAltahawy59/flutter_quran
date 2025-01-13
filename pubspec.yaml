@@ -26,6 +26,7 @@ dependencies:
 
   #Tools
   intl: ^0.19.0
+  audioplayers: ^6.1.0
 
 # This package supports all platforms listed below.
 # But note that it works and fits on mobile size devices
