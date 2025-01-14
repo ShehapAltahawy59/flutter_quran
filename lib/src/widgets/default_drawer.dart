@@ -5,21 +5,6 @@ class _DefaultDrawer extends StatelessWidget {
 
   final bool isDarkTheme;
 
-  // Function to launch the Surah audio URL
-  void _playSurahAudio(int surahIndex) async {
-    final surahAudioUrl =
-        'https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/$surahIndex.mp3'; // Replace with the correct URL format
-    final uri =
-        Uri.parse(surahAudioUrl); // Convert the URL string to a Uri object
-
-    if (await canLaunchUrl(uri)) {
-      // Use canLaunchUrl instead of canLaunch
-      await launchUrl(uri); // Use launchUrl instead of launch
-    } else {
-      throw 'Could not launch $surahAudioUrl';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final jozzs = FlutterQuran().getAllJozzs();
@@ -112,23 +97,30 @@ class _DefaultDrawer extends StatelessWidget {
                         ),
                         children: List.generate(
                           surahs.length,
-                          (index) => ListTile(
-                            title: Text(
-                              surahs[index],
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: textColor, // Set text color
+                          (index) {
+                            final surah = 'Surah ${index + 1}';
+                            return ListTile(
+                              title: Text(
+                                surahs[index],
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: textColor, // Set text color
+                                ),
                               ),
-                            ),
-                            trailing: IconButton(
-                              icon: Icon(Icons.play_arrow,
-                                  color: iconColor), // Play icon
-                              onPressed: () => _playSurahAudio(
-                                  index + 1), // Play Surah audio
-                            ),
-                            onTap: () =>
-                                FlutterQuran().navigateToSurah(index + 1),
-                          ),
+                              trailing: IconButton(
+                                icon: Icon(
+                                  AudioManager().isPlaying(surah)
+                                      ? Icons.pause
+                                      : Icons.play_arrow,
+                                  color: iconColor,
+                                ),
+                                onPressed: () =>
+                                    AudioManager().playSurahAudio(index + 1),
+                              ),
+                              onTap: () =>
+                                  FlutterQuran().navigateToSurah(index + 1),
+                            );
+                          },
                         ),
                       ),
                     ],
@@ -194,8 +186,9 @@ class AudioManager {
         await _audioPlayer.pause();
         _isPlaying = false;
       } else {
-        // Play the new Surah
-        await _audioPlayer.play(UrlSource(surahAudioUrl));
+        // Load and play the new Surah
+        await _audioPlayer.setUrl(surahAudioUrl); // Load the audio URL
+        await _audioPlayer.play(); // Start playback
         _isPlaying = true;
         _currentSurah = 'Surah $surahIndex';
       }

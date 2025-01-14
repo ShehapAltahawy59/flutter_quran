@@ -4,13 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quran/flutter_quran.dart';
 import 'package:flutter_quran/src/utils/string_extensions.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 import 'app_bloc.dart';
 import 'controllers/bookmarks_controller.dart';
 import 'controllers/quran_controller.dart';
 import 'models/quran_constants.dart';
 import 'models/quran_page.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:just_audio/just_audio.dart';
 part 'utils/images.dart';
 part 'utils/toast_utils.dart';
 part 'widgets/bsmallah_widget.dart';
